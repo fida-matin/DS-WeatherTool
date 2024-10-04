@@ -28,7 +28,7 @@ public class ContentServer {
     protected Socket socket;
     protected BufferedReader in;
     protected Writer out;
-    private UUID uuid;
+    private final UUID uuid;
     private ScheduledExecutorService heartbeat_executor;
 
     public ContentServer(Socket socket, Writer out, BufferedReader in) {

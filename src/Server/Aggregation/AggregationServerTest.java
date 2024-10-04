@@ -19,7 +19,6 @@ class AggregationServerTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @AfterEach

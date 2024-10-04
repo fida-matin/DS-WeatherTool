@@ -36,11 +36,13 @@ public class AggregationServer implements AutoCloseable, Serializable {
     public LamportClock clock;
     private final ExecutorService threadPool;
 
+    @Serial
     private static final long serialVersionUID = 1L;
+
     public Map<UUID, LinkedList<Weather>> CS_Updates = new HashMap<>();
     public Map<String, Weather> stationUpdates = new LinkedHashMap<>();
 
-    public static final String BASE_PATH = "src/main/resources";
+    public static final String BASE_PATH = "resources";
 
     boolean fileCreated = false;
 
