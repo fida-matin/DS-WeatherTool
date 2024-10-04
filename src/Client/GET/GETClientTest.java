@@ -1,9 +1,6 @@
-package Client;
+package Client.GET;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,11 +13,13 @@ class GETClientTest {
     static final String closeAddress = "src/Client/resources/CLOSERequest.txt";
     static final String expectedRequest = "GET /weather/{{URI}} HTTP/1.1" +
             "User-Agent: ATOMClient/1/0" +
+            "Content-Type: application/json" +
             "Content-Length: 0" +
             "Connection: keep-alive";
 
     static final String expectedFormat = "GET /weather/recent HTTP/1.1" +
             "User-Agent: ATOMClient/1/0" +
+            "Content-Type: application/json" +
             "Content-Length: 0" +
             "Connection: keep-alive";
 
@@ -42,8 +41,8 @@ class GETClientTest {
     }
 
 
-    @AfterEach
-    void tearDown() {
+    @AfterAll
+    static void tearDown() {
         try {
             client.close();
         } catch (IOException e) {

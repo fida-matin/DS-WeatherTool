@@ -1,4 +1,6 @@
-package Client;
+package Client.GET;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,6 +18,11 @@ public class GETClient implements AutoCloseable {
     }
 
     public String readFile(String filePath) {
+        return getString(filePath);
+    }
+
+    @NotNull
+    public static String getString(String filePath) {
         StringBuilder fileContent = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
