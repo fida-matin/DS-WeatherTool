@@ -42,7 +42,7 @@ public class AggregationServer implements AutoCloseable, Serializable {
     public Map<UUID, LinkedList<Weather>> CS_Updates = new HashMap<>();
     public Map<String, Weather> stationUpdates = new LinkedHashMap<>();
 
-    public static final String BASE_PATH = "resources";
+    public static final String BASE_PATH = "src/Server/Aggregation/resources";
 
     boolean fileCreated = false;
 

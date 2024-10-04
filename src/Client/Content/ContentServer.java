@@ -15,7 +15,7 @@ import static Client.GET.GETClient.getString;
 
 public class ContentServer {
 
-    public static final String RESOURCE_PATH = "src/main/resources/";
+    public static final String RESOURCE_PATH = "src/Client/Content/resources/";
 
     static final int HEARTBEAT_INTERVAL = 10;
     public static final String HEARTBEAT_REQUEST = RESOURCE_PATH + "requests/HeartbeatRequest.txt";

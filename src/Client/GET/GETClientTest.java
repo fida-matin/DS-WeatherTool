@@ -9,8 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GETClientTest {
 
-    static final String requestAddress = "src/Client/resources/GETRequest.txt";
-    static final String closeAddress = "src/Client/resources/CLOSERequest.txt";
+    static final String requestAddress = "src/Client/GET/resources/GETRequest.txt";
     static final String expectedRequest = "GET /weather/{{URI}} HTTP/1.1" +
             "User-Agent: ATOMClient/1/0" +
             "Content-Type: application/json" +

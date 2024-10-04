@@ -15,7 +15,7 @@ public class GETClient implements AutoCloseable {
     protected BufferedReader in;
     protected Writer out;
 
-    static final String requestAddress = "src/Client/resources/GETRequest.txt";
+    static final String requestAddress = "src/Client/GET/resources/GETRequest.txt";
 
     public GETClient(Socket socket, Writer out, BufferedReader in) {
         this.socket = socket;
