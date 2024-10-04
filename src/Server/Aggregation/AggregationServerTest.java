@@ -15,7 +15,7 @@ class AggregationServerTest {
     void setUp() throws IOException {
 
         try (ServerSocket ss = new ServerSocket(8081)) {
-            AG_server = new AggregationServer(ss, , );
+            AG_server = new AggregationServer(ss);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
