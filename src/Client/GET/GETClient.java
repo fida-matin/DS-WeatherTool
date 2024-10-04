@@ -5,8 +5,6 @@
 
 package Client.GET;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -32,7 +30,6 @@ public class GETClient implements AutoCloseable {
         return getString(filePath);
     }
 
-    @NotNull
     public static String getString(String filePath) {
         StringBuilder fileContent = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

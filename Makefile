@@ -19,27 +19,28 @@ compile: compile_as compile_cs compile_client compile_util
 
 
 compile_as:
-	cd Server && cp -r $(COMMON) $(SRCDIR) && javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Server/Aggregation/AggregationServer.java
+	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Server/Aggregation/AggregationServer.java
 
 compile_cs:
-	cd Client/Content && cp -r $(COMMON) $(SRCDIR) && javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Client/Content/ContentServer.java
+	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Client/Content/ContentServer.java
 
 compile_client:
-	cd Client/GET && cp -r $(COMMON) $(SRCDIR) && javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Client/GET/GETClient.java
+	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Client/GET/GETClient.java
 
 compile_util:
 	# compile src
-	cd HTTP && javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) ./*.java
-	cd util && javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) ./*.java
+	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/util/JSONObject.java
+	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/util/LamportClock.java
+	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/util/Weather.java
 
 run_as:
-	cd Server/Aggregation && java $(JFLAGS) $(PACKAGE).aggregationserver.AggregationServer --default
+	java $(JFLAGS) $(PACKAGE).aggregationserver.AggregationServer --default
 
 run_cs:
-	cd Client/Content && java $(JFLAGS) $(PACKAGE).contentserver.ContentServer --default
+	java $(JFLAGS) $(PACKAGE).contentserver.ContentServer --default
 
 run_client:
-	cd Client/GET && java $(JFLAGS) $(PACKAGE).client.GETClient --default
+	java $(JFLAGS) $(PACKAGE).client.GETClient --default
 
 # Clean targets
 clean:
