@@ -65,7 +65,7 @@ public class GETClient implements AutoCloseable {
         if (mapped_args == null) return;
 
         String host = mapped_args.getOrDefault("host", "localhost");
-        int port = Integer.parseInt(mapped_args.getOrDefault("port", "4567"));
+        int port = Integer.parseInt(mapped_args.getOrDefault("port", "8082"));
         String request = mapped_args.getOrDefault("request", requestAddress);
         String URI = mapped_args.getOrDefault("URI", "recent");
 
