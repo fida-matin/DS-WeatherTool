@@ -1,4 +1,8 @@
 package Server.Aggregation;
+// University of Adelaide - Distributed Systems 2024
+// Fida Matin - a1798239
+// 4 October 2024
+
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,3 +1,8 @@
+// University of Adelaide - Distributed Systems 2024
+// Fida Matin - a1798239
+// 4 October 2024
+
+
 package Server.Aggregation;
 
 import HTTP.HTTP_message;
