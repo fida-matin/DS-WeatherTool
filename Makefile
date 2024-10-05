@@ -8,7 +8,7 @@ JC = javac
 SRC_DIR = src
 BIN_DIR = bin
 TEST_DIR = bin/tests
-JUNIT_CP = lib/junit-platform-console-standalone-1.7.2.jar
+JUNIT_CP = lib/junit-platform-console-standalone-1.7.2.jar # Adjust to match your JUnit JAR
 
 # Automatically find all .java files in SRC_DIR (excluding Test files)
 SRC = $(shell find $(SRC_DIR) -name '*.java' ! -name '*Test.java')
@@ -23,7 +23,11 @@ CLASSES = $(SRC:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
 TEST_CLASSES = $(TEST_SRC:$(SRC_DIR)/%.java=$(TEST_DIR)/%.class)
 
 # Default target to compile all classes and tests
-default: classes
+default: prepare classes tests
+
+# Create bin and test directories if they don't exist
+prepare:
+	@mkdir -p $(BIN_DIR) $(TEST_DIR)
 
 # Rule to compile all source .class files
 classes: $(CLASSES)
@@ -60,3 +64,4 @@ run-content: classes
 # Run GETClient
 run-client: classes
 	java -cp $(BIN_DIR) Client.GET.GETClient
+
