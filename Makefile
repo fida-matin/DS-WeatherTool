@@ -8,7 +8,7 @@ JC = javac
 SRC_DIR = src
 BIN_DIR = bin
 TEST_DIR = bin/tests
-JUNIT_CP = lib/junit-platform-console-standalone-1.7.2.jar # Adjust to match your JUnit JAR
+JUNIT_CP = lib/junit-platform-console-standalone-1.7.2.jar # Adjust to match JUnit JAR
 
 # Automatically find all .java files in SRC_DIR (excluding Test files)
 SRC = $(shell find $(SRC_DIR) -name '*.java' ! -name '*Test.java')
@@ -30,8 +30,8 @@ prepare:
 	@mkdir -p $(BIN_DIR)
 	@mkdir -p $(TEST_DIR)
 	# Ensuring all necessary directories corresponding to source files are created
-	@for dir in $(shell find $(SRC_DIR) -type d | sed 's/^$(SRC_DIR)/$(BIN_DIR)/'); do \
-		mkdir -p $$dir; \
+	@for dir in $(shell find $(SRC_DIR) -type d); do \
+		mkdir -p $(BIN_DIR)/$$dir; \
 	done
 
 # Rule to compile all source .class files
@@ -43,7 +43,7 @@ tests: $(TEST_CLASSES)
 # Rule for compiling each source .java file into corresponding .class file
 $(BIN_DIR)/%.class: $(SRC_DIR)/%.java
 	@mkdir -p $(dir $@)
-	$(JC) $(JFLAGS) -d $(BIN_DIR) -cp $(SRC_DIR) $<
+	$(JC) $(JFLAGS) -d $(BIN_DIR) -cp $(SRC_DIR):$(JUNIT_CP) $<
 
 # Rule for compiling each test .java file into corresponding .class file
 $(TEST_DIR)/%.class: $(SRC_DIR)/%.java
@@ -59,7 +59,7 @@ clean:
 	rm -rf $(BIN_DIR) $(TEST_DIR)
 
 # Run main Java class
-run: classes
+run-server: classes
 	java -cp $(BIN_DIR) Server.Aggregation.AggregationServer # Adjust the class name to your main class
 
 # Run ContentServer
@@ -69,7 +69,6 @@ run-content: classes
 # Run GETClient
 run-client: classes
 	java -cp $(BIN_DIR) Client.GET.GETClient
-
 
 
 
