@@ -23,11 +23,16 @@ CLASSES = $(SRC:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
 TEST_CLASSES = $(TEST_SRC:$(SRC_DIR)/%.java=$(TEST_DIR)/%.class)
 
 # Default target to compile all classes and tests
-default: prepare classes tests
+default: prepare classes
 
-# Create bin and test directories if they don't exist
+# Create all required directories (bin and subdirectories for compiled classes)
 prepare:
-	@mkdir -p $(BIN_DIR) $(TEST_DIR)
+	@mkdir -p $(BIN_DIR)
+	@mkdir -p $(TEST_DIR)
+	# Ensuring all necessary directories corresponding to source files are created
+	@for dir in $(shell find $(SRC_DIR) -type d | sed 's/^$(SRC_DIR)/$(BIN_DIR)/'); do \
+		mkdir -p $$dir; \
+	done
 
 # Rule to compile all source .class files
 classes: $(CLASSES)
@@ -64,4 +69,5 @@ run-content: classes
 # Run GETClient
 run-client: classes
 	java -cp $(BIN_DIR) Client.GET.GETClient
+
 
