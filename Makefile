@@ -2,46 +2,61 @@
 # Fida Matin - a1798239
 # 4 October 2024
 
-# Variables
-JFLAGS = -cp ".:./src:../lib/*:./lib/*:.."
-SRCDIR = src
-BINDIR = ../bin
-
+# Compiler and flags
+JFLAGS = -g
 JC = javac
+SRC_DIR = src
+BIN_DIR = bin
+TEST_DIR = bin/tests
+JUNIT_CP = lib/junit-platform-console-standalone-1.7.2.jar
 
-.SUFFIXES: .java .class
+# Automatically find all .java files in SRC_DIR (excluding Test files)
+SRC = $(shell find $(SRC_DIR) -name '*.java' ! -name '*Test.java')
 
-# Target: all
-all: compile
+# Automatically find all test files in SRC_DIR
+TEST_SRC = $(shell find $(SRC_DIR) -name '*Test.java')
 
-# Compile targets
-compile: compile_as compile_cs compile_client compile_util
+# Convert .java file paths to corresponding .class file paths in BIN_DIR
+CLASSES = $(SRC:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
 
+# Convert test .java files to .class files in TEST_DIR
+TEST_CLASSES = $(TEST_SRC:$(SRC_DIR)/%.java=$(TEST_DIR)/%.class)
 
-compile_as:
-	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Server/Aggregation/AggregationServer.java
+# Default target to compile all classes and tests
+default: classes
 
-compile_cs:
-	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Client/Content/ContentServer.java
+# Rule to compile all source .class files
+classes: $(CLASSES)
 
-compile_client:
-	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/Client/GET/GETClient.java
+# Rule to compile all test .class files
+tests: $(TEST_CLASSES)
 
-compile_util:
-	# compile src
-	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/util/JSONObject.java
-	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/util/LamportClock.java
-	javac $(JFLAGS) -d $(BINDIR)/$(SRCDIR) $(SRCDIR)/util/Weather.java
+# Rule for compiling each source .java file into corresponding .class file
+$(BIN_DIR)/%.class: $(SRC_DIR)/%.java
+	@mkdir -p $(dir $@)
+	$(JC) $(JFLAGS) -d $(BIN_DIR) -cp $(SRC_DIR) $<
 
-run_as:
-	java $(JFLAGS) $(PACKAGE).aggregationserver.AggregationServer --default
+# Rule for compiling each test .java file into corresponding .class file
+$(TEST_DIR)/%.class: $(SRC_DIR)/%.java
+	@mkdir -p $(dir $@)
+	$(JC) $(JFLAGS) -d $(TEST_DIR) -cp $(SRC_DIR):$(JUNIT_CP) $<
 
-run_cs:
-	java $(JFLAGS) $(PACKAGE).contentserver.ContentServer --default
+# Run tests using JUnit
+test: tests
+	java -cp $(TEST_DIR):$(BIN_DIR):$(JUNIT_CP) org.junit.platform.console.ConsoleLauncher --scan-class-path
 
-run_client:
-	java $(JFLAGS) $(PACKAGE).client.GETClient --default
-
-# Clean targets
+# Clean target to remove all .class files
 clean:
-	rm -rf ./bin
+	rm -rf $(BIN_DIR) $(TEST_DIR)
+
+# Run main Java class
+run: classes
+	java -cp $(BIN_DIR) Server.Aggregation.AggregationServer # Adjust the class name to your main class
+
+# Run ContentServer
+run-content: classes
+	java -cp $(BIN_DIR) Client.Content.ContentServer
+
+# Run GETClient
+run-client: classes
+	java -cp $(BIN_DIR) Client.GET.GETClient

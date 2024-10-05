@@ -10,7 +10,6 @@ import HTTP.HTTP_request;
 import util.JSONObject;
 import util.LamportClock;
 import util.Weather;
-import util.LamportClock.Event;
 
 import java.net.*;
 import java.io.*;
@@ -218,7 +217,7 @@ public class AggregationServer implements AutoCloseable, Serializable {
     public String doPUTRequest(HTTP_request request) {
         try {
             int timestamp = Integer.parseInt(request.getHeader("Timestamp"));
-            Event event = clock.processTimestamp(timestamp);
+            LamportClock.Event event = clock.processTimestamp(timestamp);
             UUID CS_UUID;
             JSONObject weatherData = null;
 
